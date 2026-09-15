@@ -1,0 +1,13 @@
+node_modules
+dist
+.output
+.vinxi
+pnpm-lock.yaml
+package-lock.json
+bun.lock
+routeTree.gen.ts
+
+demo_folder_heirarchy/
+artifacts/
+test-results/
+playwright-report/
