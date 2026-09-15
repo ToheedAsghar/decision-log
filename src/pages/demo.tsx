@@ -173,18 +173,26 @@ export function DemoApp() {
         <div className="demo-grid">
           <section className="decision-index" aria-label="Decision list">
             {visible.length ? (
-              visible.map((decision) => (
-                <DecisionRow
-                  key={decision.id}
-                  decision={decision}
-                  selected={selected?.id === decision.id}
-                  onSelect={(trigger) => {
-                    formTrigger.current = trigger;
-                    setSelectedId(decision.id);
-                    setMobileOpen(true);
-                  }}
-                />
-              ))
+              <>
+                {visible.map((decision) => (
+                  <DecisionRow
+                    key={decision.id}
+                    decision={decision}
+                    selected={selected?.id === decision.id}
+                    onSelect={(trigger) => {
+                      formTrigger.current = trigger;
+                      setSelectedId(decision.id);
+                      setMobileOpen(true);
+                    }}
+                  />
+                ))}
+                <div className="decision-index-footer" role="status">
+                  <span>
+                    {visible.length} {visible.length === 1 ? "record" : "records"} in view
+                  </span>
+                  <span>End of ledger</span>
+                </div>
+              </>
             ) : (
               <div className="empty-state" role="status">
                 {decisions.length ? (

@@ -1685,6 +1685,18 @@ textarea {
 .decision-index {
   border-right: 1px solid var(--border);
 }
+.decision-index-footer {
+  padding: 16px 20px;
+  font-size: 11px;
+  font-family: var(--font-mono, monospace);
+  color: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  letter-spacing: 0.02em;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
 .desktop-detail {
   padding: 36px clamp(28px, 4vw, 64px);
 }
