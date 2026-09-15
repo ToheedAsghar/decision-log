@@ -211,10 +211,10 @@
   text-align: center;
 }
 .final-hero h1 {
-  max-width: 790px;
+  max-width: 980px;
   margin: 24px 0 22px;
   font-family: "Newsreader", serif;
-  font-size: clamp(60px, 7vw, 92px);
+  font-size: clamp(60px, 6vw, 82px);
   font-weight: 500;
   line-height: 0.94;
 }
@@ -2367,4 +2367,3 @@ textarea {
     padding-block: 24px;
   }
 }
-
