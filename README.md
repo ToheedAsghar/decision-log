@@ -16,15 +16,15 @@ persistent storage.
 - Create new decisions during a session.
 - Supersede an existing decision while preserving the link between the old and
   new records.
-- Delete records from the current session.
+- Archive records from the current session.
 - Use the interface with keyboard navigation and responsive layouts.
 
 ## Routes
 
-| Route | Description |
-| --- | --- |
-| `/` | Product landing page with the Decision Log principles and examples. |
-| `/demo/` | Interactive in-memory decision browser. |
+| Route    | Description                                                         |
+| -------- | ------------------------------------------------------------------- |
+| `/`      | Product landing page with the Decision Log principles and examples. |
+| `/demo/` | Interactive in-memory decision browser.                             |
 
 ## Requirements
 
@@ -53,16 +53,16 @@ npm run preview
 
 ## Scripts
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start the development server. |
-| `npm run build` | Create the production/prerendered build. |
-| `npm run build:dev` | Create a development-mode build. |
-| `npm run preview` | Serve the production build locally. |
-| `npm run typecheck` | Run TypeScript without emitting files. |
-| `npm run lint` | Run ESLint. |
-| `npm test` | Run the Playwright browser tests. |
-| `npm run format` | Format the repository with Prettier. |
+| Command             | Purpose                                  |
+| ------------------- | ---------------------------------------- |
+| `npm run dev`       | Start the development server.            |
+| `npm run build`     | Create the production/prerendered build. |
+| `npm run build:dev` | Create a development-mode build.         |
+| `npm run preview`   | Serve the production build locally.      |
+| `npm run typecheck` | Run TypeScript without emitting files.   |
+| `npm run lint`      | Run ESLint.                              |
+| `npm test`          | Run the Playwright browser tests.        |
+| `npm run format`    | Format the repository with Prettier.     |
 
 Run the main checks together before handing off a change:
 

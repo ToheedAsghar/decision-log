@@ -83,7 +83,7 @@ export function DecisionRecord({
           })}
         </div>
       ) : decision.supersededById ? (
-        <p className="replacement-link">Replacement deleted from this session.</p>
+        <p className="replacement-link">Replacement archived from this session.</p>
       ) : null}
       <footer className="record-footer">
         {decision.tags.length > 0 ? (

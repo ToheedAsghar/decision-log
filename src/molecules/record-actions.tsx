@@ -15,14 +15,17 @@ import {
 export function RecordActions({
   status,
   disabled = false,
+  onArchive,
   onDelete,
   onSupersede,
 }: {
   status: DecisionStatus;
   disabled?: boolean;
-  onDelete: () => void;
+  onArchive?: () => void;
+  onDelete?: () => void;
   onSupersede: (trigger: HTMLButtonElement) => void;
 }) {
+  const handleArchive = onArchive ?? onDelete;
   return (
     <>
       {status === "active" ? (
@@ -37,19 +40,20 @@ export function RecordActions({
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button disabled={disabled} variant="ghost">
-            Delete decision
+            Archive decision
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="confirm-dialog">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete this decision?</AlertDialogTitle>
+            <AlertDialogTitle>Archive this decision?</AlertDialogTitle>
             <AlertDialogDescription>
-              The record will be removed for the rest of this demo session.
+              Archiving hides this record from the active log for this session without erasing its
+              history.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Keep decision</AlertDialogCancel>
-            <AlertDialogAction onClick={onDelete}>Delete decision</AlertDialogAction>
+            <AlertDialogAction onClick={handleArchive}>Archive decision</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

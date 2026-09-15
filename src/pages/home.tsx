@@ -10,11 +10,70 @@ import type { Decision } from "@/common/types";
 
 const demoHref = `${import.meta.env.BASE_URL}demo/`;
 
+const illustrativeDecisions: Decision[] = [
+  {
+    id: "support-email",
+    number: 1,
+    title: "Route support requests through shared email",
+    description:
+      "A shared inbox was the fastest way to give the whole team visibility while request volume was still low. As volume grew, ownership and response history became difficult to follow.",
+    rationale:
+      "Initial setup needed to be simple. We did not yet have the volume to justify dedicated ticketing tools, and email kept everyone in the loop.",
+    decisionMakers: [
+      { id: "jordan", name: "Jordan Lee", initials: "JL" },
+      { id: "maya", name: "Maya Chen", initials: "MC" },
+    ],
+    tags: ["support", "workflow"],
+    category: "Support",
+    status: "superseded",
+    supersededById: "support-queue",
+    date: "2026-07-14",
+  },
+  {
+    id: "support-queue",
+    number: 2,
+    title: "Track support requests in a shared queue",
+    description:
+      "The shared inbox no longer made responsibility clear. A lightweight queue preserves the speed of email while making ownership, handoffs, and response history visible.",
+    rationale:
+      "Support load tripled over the last two quarters. Shared inbox collisions caused duplicate replies and dropped threads.",
+    decisionMakers: [
+      { id: "jordan", name: "Jordan Lee", initials: "JL" },
+      { id: "alex", name: "Alex Rivera", initials: "AR" },
+    ],
+    tags: ["support", "workflow"],
+    category: "Support",
+    status: "active",
+    date: "2026-08-19",
+  },
+  {
+    id: "release-cadence",
+    number: 3,
+    title: "Move releases from Friday to Tuesday",
+    description:
+      "Production releases will happen on Tuesday mornings instead of Friday afternoons, starting with the next release cycle.",
+    rationale:
+      "Friday releases repeatedly left the team with too little time to investigate production issues before the weekend.",
+    decisionMakers: [
+      { id: "maya", name: "Maya Chen", initials: "MC" },
+      { id: "jordan", name: "Jordan Lee", initials: "JL" },
+    ],
+    tags: ["release", "operations"],
+    category: "Operations",
+    status: "active",
+    date: "2026-09-08",
+  },
+];
+
 export function LandingPage() {
-  const examples = seedDecisions.filter((decision) => decision.status === "active").slice(0, 3);
-  const oldDecision = seedDecisions.find((decision) => decision.id === "support-email");
-  const newDecision = seedDecisions.find((decision) => decision.id === "support-queue");
-  if (!oldDecision || !newDecision || examples.length < 3) return null;
+  const source = seedDecisions.length >= 3 ? seedDecisions : illustrativeDecisions;
+  const activeDecisions = source.filter((decision) => decision.status === "active");
+  const examples =
+    activeDecisions.length >= 3 ? activeDecisions.slice(0, 3) : illustrativeDecisions;
+  const oldDecision =
+    source.find((decision) => decision.id === "support-email") ?? illustrativeDecisions[0]!;
+  const newDecision =
+    source.find((decision) => decision.id === "support-queue") ?? illustrativeDecisions[1]!;
 
   return (
     <main className="final-landing">
@@ -37,15 +96,19 @@ export function LandingPage() {
       </header>
 
       <section className="final-hero final-width" aria-labelledby="hero-title">
-        <p className="final-kicker">A searchable memory for your project</p>
+        <p className="final-kicker">A durable memory for your project</p>
         <h1 id="hero-title">One place for every decision your team has made.</h1>
         <p>
-          Find what was decided, why it changed, and who was involved—without searching through old
-          meetings and message threads.
+          Find what was decided, why it was decided, and who was involved—without searching through
+          old meetings and message threads.
+        </p>
+        <p className="final-hero-pain">
+          Whether it’s new hires or the person who joins six months later, your team shouldn’t have
+          to keep re-asking the same questions.
         </p>
         <div className="final-hero-actions">
           <a className="final-button" href={demoHref}>
-            Open interactive demo <ArrowRight aria-hidden="true" />
+            Try demo <ArrowRight aria-hidden="true" />
           </a>
           <a className="final-hero-secondary" href="#why">
             Why it matters ↓
@@ -56,8 +119,9 @@ export function LandingPage() {
 
       <section className="final-intro final-width" id="why">
         <p>
-          The answers to your team’s daily questions are scattered across documents, tickets, and
-          messages. Decision Log keeps the final answer and its reasoning together.
+          When new hires join or the person who joins six months later asks why a choice was made,
+          the answers are scattered across documents, tickets, and messages. Decision Log keeps what
+          was decided and why it was decided in one durable ledger.
         </p>
       </section>
 
@@ -165,7 +229,7 @@ export function LandingPage() {
           <p>Keep the answer close.</p>
           <h2>Stop reopening decisions you’ve already made.</h2>
           <a className="final-button final-button-light" href={demoHref}>
-            Try Decision Log <ArrowRight aria-hidden="true" />
+            Try demo <ArrowRight aria-hidden="true" />
           </a>
         </div>
       </section>
@@ -188,7 +252,7 @@ export function LandingPage() {
           <p className="final-footer-note">Built for teams that change their minds carefully.</p>
           <div className="final-footer-meta">
             <a href={demoHref} className="final-footer-link">
-              Interactive demo →
+              Try demo →
             </a>
           </div>
         </div>
@@ -249,7 +313,7 @@ function DecisionCarousel({ decisions }: { decisions: Decision[] }) {
                 <span>{decision.decisionMakers.map((person) => person.initials).join(" · ")}</span>
               </span>
               {offset === 0 && (
-                <a className="final-fan-open" href={demoHref} aria-label="Open the demo">
+                <a className="final-fan-open" href={demoHref} aria-label="Try demo">
                   <ArrowRight aria-hidden="true" />
                 </a>
               )}
@@ -290,7 +354,7 @@ function DecisionCarousel({ decisions }: { decisions: Decision[] }) {
           <span className="final-carousel-counter" aria-live="polite">
             {String(activeIndex + 1).padStart(2, "0")} / {String(decisions.length).padStart(2, "0")}
           </span>
-          <div className="final-carousel-segments" role="tablist" aria-label="Choose a decision">
+          <div className="final-carousel-segments" role="group" aria-label="Choose a decision">
             {decisions.map((decision, index) => (
               <button
                 key={decision.id}

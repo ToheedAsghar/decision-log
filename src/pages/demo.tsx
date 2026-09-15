@@ -19,7 +19,9 @@ export function DemoApp() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [form, setForm] = useState<{ replacing?: Decision } | null>(null);
   const [notice, setNotice] = useState("");
-  const nextNumber = useRef(Math.max(...seedDecisions.map((decision) => decision.number)) + 1);
+  const nextNumber = useRef(
+    seedDecisions.length ? Math.max(...seedDecisions.map((decision) => decision.number)) + 1 : 1,
+  );
   const newButton = useRef<HTMLButtonElement>(null);
   const formTrigger = useRef<HTMLButtonElement | null>(null);
 
@@ -90,10 +92,10 @@ export function DemoApp() {
     setForm(null);
   }
 
-  function deleteDecision(decision: Decision) {
+  function archiveDecision(decision: Decision) {
     const remaining = visible.filter((item) => item.id !== decision.id);
     setDecisions((current) => current.filter((item) => item.id !== decision.id));
-    setNotice(`Decision #${decision.number} deleted.`);
+    setNotice(`Decision #${decision.number} archived.`);
     const next = remaining[0];
     if (next) {
       setSelectedId(next.id);
@@ -178,69 +180,71 @@ export function DemoApp() {
             <span>New decision</span>
           </Button>
         </div>
-        <div className="demo-grid">
-          <section className="decision-index" aria-label="Decision list">
-            {visible.length ? (
-              <>
-                {visible.map((decision) => (
-                  <DecisionRow
-                    key={decision.id}
-                    decision={decision}
-                    selected={selected?.id === decision.id}
-                    onSelect={(trigger) => {
-                      formTrigger.current = trigger;
-                      setSelectedId(decision.id);
-                      setMobileOpen(true);
-                    }}
-                  />
-                ))}
-                <div className="decision-index-footer" role="status">
-                  <span>
-                    {visible.length} {visible.length === 1 ? "record" : "records"} in view
-                  </span>
-                  <span>End of ledger</span>
-                </div>
-              </>
-            ) : (
-              <div className="empty-state" role="status">
-                {decisions.length ? (
+        {decisions.length === 0 ? (
+          <div className="empty-state empty-state-full" role="status">
+            <h3>No decisions in the log yet</h3>
+            <p>
+              Start by recording your team’s first decision using the "New decision" button above.
+            </p>
+          </div>
+        ) : (
+          <div className="demo-grid">
+            <section className="decision-index" aria-label="Decision list">
+              {visible.length ? (
+                <>
+                  {visible.map((decision) => (
+                    <DecisionRow
+                      key={decision.id}
+                      decision={decision}
+                      selected={selected?.id === decision.id}
+                      onSelect={(trigger) => {
+                        formTrigger.current = trigger;
+                        setSelectedId(decision.id);
+                        setMobileOpen(true);
+                      }}
+                    />
+                  ))}
+                  <div className="decision-index-footer" role="status">
+                    <span>
+                      {visible.length} {visible.length === 1 ? "record" : "records"} in view
+                    </span>
+                    <span>End of ledger</span>
+                  </div>
+                </>
+              ) : (
+                <div className="empty-state" role="status">
                   <p>No {filter} decisions.</p>
-                ) : (
-                  <>
-                    <p>No decisions recorded yet.</p>
-                    <p>Add the first one.</p>
-                  </>
-                )}
-              </div>
-            )}
-          </section>
-          <section className="desktop-detail" aria-label="Decision detail">
-            {selected ? (
-              <DecisionRecord
-                key={selected.id}
-                decision={selected}
-                {...(replacement ? { replacement } : {})}
-                {...(previous ? { previous } : {})}
-                onOpenRelated={openRelated}
-                actions={
-                  <RecordActions
-                    disabled={!hydrated}
-                    status={selected.status}
-                    onDelete={() => deleteDecision(selected)}
-                    onSupersede={(trigger) => {
-                      formTrigger.current = trigger;
-                      setForm({ replacing: selected });
-                    }}
-                  />
-                }
-              />
-            ) : (
-              <div className="empty-state" role="status">
-                <p>Select a decision to view its details.</p>
-              </div>
-            )}
-          </section>
-        </div>
+                </div>
+              )}
+            </section>
+            <section className="desktop-detail" aria-label="Decision detail">
+              {selected ? (
+                <DecisionRecord
+                  key={selected.id}
+                  decision={selected}
+                  {...(replacement ? { replacement } : {})}
+                  {...(previous ? { previous } : {})}
+                  onOpenRelated={openRelated}
+                  actions={
+                    <RecordActions
+                      disabled={!hydrated}
+                      status={selected.status}
+                      onArchive={() => archiveDecision(selected)}
+                      onSupersede={(trigger) => {
+                        formTrigger.current = trigger;
+                        setForm({ replacing: selected });
+                      }}
+                    />
+                  }
+                />
+              ) : (
+                <div className="empty-state" role="status">
+                  <p>No decisions match the current filter.</p>
+                </div>
+              )}
+            </section>
+          </div>
+        )}
         {mobileOpen && selected ? (
           <div className="mobile-detail" aria-label="Decision detail">
             <Button variant="ghost" className="back-button" onClick={() => setMobileOpen(false)}>
@@ -255,8 +259,8 @@ export function DemoApp() {
                 <RecordActions
                   disabled={!hydrated}
                   status={selected.status}
-                  onDelete={() => {
-                    deleteDecision(selected);
+                  onArchive={() => {
+                    archiveDecision(selected);
                     setMobileOpen(false);
                   }}
                   onSupersede={(trigger) => {
