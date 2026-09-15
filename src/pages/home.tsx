@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { ArrowRight, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/atoms/button";
 import { StatusMark } from "@/atoms/status-mark";
+import { BrandMark } from "@/atoms/brand-logo";
 import { ProductPreview } from "@/molecules/product-preview";
 import { seedDecisions } from "@/constants/decisions";
 import { formatDecisionDate } from "@/common/decisions";
@@ -19,10 +20,11 @@ export function LandingPage() {
     <main className="final-landing">
       <header className="final-nav final-width">
         <a href={import.meta.env.BASE_URL} className="final-brand" aria-label="Decision Log home">
-          <span aria-hidden="true">
-            <i />
-          </span>
-          <strong>Decision Log</strong>
+          <BrandMark />
+          <strong>
+            <span className="brand-name-primary">Decision</span>{" "}
+            <span className="brand-name-secondary">Log</span>
+          </strong>
         </a>
         <nav aria-label="Main navigation">
           <a href="#why">Why</a>
@@ -172,10 +174,11 @@ export function LandingPage() {
         <div className="final-footer-inner final-width">
           <div className="final-footer-brand">
             <a href={import.meta.env.BASE_URL} className="final-brand">
-              <span aria-hidden="true">
-                <i />
-              </span>
-              <strong>Decision Log</strong>
+              <BrandMark size={18} />
+              <strong>
+                <span className="brand-name-primary">Decision</span>{" "}
+                <span className="brand-name-secondary">Log</span>
+              </strong>
             </a>
             <span className="final-footer-sep" aria-hidden="true">
               ·

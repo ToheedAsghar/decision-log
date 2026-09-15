@@ -6,6 +6,7 @@ import { Dialog } from "@/molecules/ui/dialog";
 import { DecisionRecord, DecisionRow } from "@/molecules/decision";
 import { DecisionForm, type FormValues } from "@/molecules/decision-form";
 import { RecordActions } from "@/molecules/record-actions";
+import { BrandMark } from "@/atoms/brand-logo";
 import { seedDecisions } from "@/constants/decisions";
 import type { Decision } from "@/common/types";
 
@@ -108,10 +109,11 @@ export function DemoApp() {
             className="final-brand wordmark"
             aria-label="Decision Log home"
           >
-            <span aria-hidden="true">
-              <i />
-            </span>
-            <strong>Decision Log</strong>
+            <BrandMark variant="lineage" />
+            <strong>
+              <span className="brand-name-primary">Decision</span>{" "}
+              <span className="brand-name-secondary">Log</span>
+            </strong>
           </a>
           <span className="demo-badge">
             <span className="demo-badge-dot" aria-hidden="true" />
@@ -255,10 +257,11 @@ export function DemoApp() {
         <div className="demo-footer-inner">
           <div className="demo-footer-brand">
             <a href={import.meta.env.BASE_URL} className="demo-footer-brand-link">
-              <span aria-hidden="true">
-                <i />
-              </span>
-              <strong>Decision Log</strong>
+              <BrandMark variant="lineage" size={18} />
+              <strong>
+                <span className="brand-name-primary">Decision</span>{" "}
+                <span className="brand-name-secondary">Log</span>
+              </strong>
             </a>
             <span className="demo-footer-sep" aria-hidden="true">
               ·
