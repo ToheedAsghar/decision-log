@@ -262,30 +262,8 @@ export function DemoApp() {
         ) : null}
       </main>
       <footer className="demo-footer">
-        <div className="demo-footer-inner">
-          <div className="demo-footer-brand">
-            <a href={import.meta.env.BASE_URL} className="demo-footer-brand-link">
-              <BrandMark variant="lineage" size={18} />
-              <strong>
-                <span className="brand-name-primary">Decision</span>{" "}
-                <span className="brand-name-secondary">Log</span>
-              </strong>
-            </a>
-            <span className="demo-footer-sep" aria-hidden="true">
-              ·
-            </span>
-            <span>In-memory sandbox</span>
-          </div>
+        <div className="demo-footer-inner demo-footer-minimal">
           <p className="demo-footer-note">Built for teams that change their minds carefully.</p>
-          <div className="demo-footer-meta">
-            <a href={import.meta.env.BASE_URL} className="demo-footer-return">
-              ← Return to overview
-            </a>
-            <span className="demo-footer-sep" aria-hidden="true">
-              ·
-            </span>
-            <span>DL / 2026</span>
-          </div>
         </div>
       </footer>
     </div>

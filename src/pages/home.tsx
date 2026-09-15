@@ -190,10 +190,6 @@ export function LandingPage() {
             <a href={demoHref} className="final-footer-link">
               Interactive demo →
             </a>
-            <span className="final-footer-sep" aria-hidden="true">
-              ·
-            </span>
-            <span>DL / 2026</span>
           </div>
         </div>
       </footer>
