@@ -1,7 +1,7 @@
 # Decision Log
 
-Decision Log is a small, searchable project-memory app for recording what a
-team decided, why it decided it, and how that decision changed over time.
+Decision Log is a small project-memory app for recording what a
+team decided, why it was decided, and how that decision changed over time.
 
 The repository currently contains a public landing page and an interactive
 demo. The demo is deliberately client-side and in-memory: it is useful for

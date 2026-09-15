@@ -86,6 +86,16 @@ export function DecisionRecord({
         <p className="replacement-link">Replacement deleted from this session.</p>
       ) : null}
       <footer className="record-footer">
+        {decision.tags.length > 0 ? (
+          <div>
+            <h3>Tags</h3>
+            <ul className="record-tags" aria-label="Decision tags">
+              {decision.tags.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
         {decision.decisionMakers.length > 0 ? (
           <div>
             <h3>Decided by</h3>
@@ -119,7 +129,7 @@ export function DecisionRow({
         <StatusMark status={decision.status} />
       </div>
       <div className="row-copy">
-        <h3>{decision.title}</h3>
+        <p className="row-copy-title">{decision.title}</p>
         <p>{decision.description || decision.rationale}</p>
       </div>
       <div className="row-meta">

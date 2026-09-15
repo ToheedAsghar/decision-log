@@ -13,6 +13,7 @@ export type Decision = {
   description: string;
   rationale: string;
   decisionMakers: Person[];
+  tags: string[];
   date: string;
   status: DecisionStatus;
   category?: string;

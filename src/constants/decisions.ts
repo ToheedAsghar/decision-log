@@ -23,6 +23,7 @@ export const seedDecisions: Decision[] = [
     rationale:
       "Friday releases repeatedly left the team with too little time to investigate production issues before the weekend. Tuesday gives us several working days to respond.",
     decisionMakers: [byId("maya"), byId("jordan")],
+    tags: ["release", "operations"],
     category: "Operations",
     status: "active",
     date: "2026-09-08",
@@ -36,6 +37,7 @@ export const seedDecisions: Decision[] = [
     rationale:
       "Customers understood the product faster when they could bring in one existing decision during setup. The imported record also gives the archive useful context from the first session.",
     decisionMakers: [byId("maya"), byId("sam")],
+    tags: ["onboarding", "product"],
     category: "Product",
     status: "active",
     date: "2026-09-04",
@@ -48,6 +50,7 @@ export const seedDecisions: Decision[] = [
     rationale:
       "Shared semantic names keep states consistent across the product and make future contrast or theme changes possible without rewriting individual screens.",
     decisionMakers: [byId("sam"), byId("jordan")],
+    tags: ["design system", "accessibility"],
     category: "Design",
     status: "active",
     date: "2026-08-28",
@@ -60,6 +63,7 @@ export const seedDecisions: Decision[] = [
     rationale:
       "A shared inbox was the fastest way to give the whole team visibility while request volume was still low. As volume grew, ownership and response history became difficult to follow.",
     decisionMakers: [byId("jordan"), byId("maya")],
+    tags: ["support", "email"],
     category: "Customer support",
     status: "superseded",
     supersededById: "support-queue",
@@ -73,6 +77,7 @@ export const seedDecisions: Decision[] = [
     rationale:
       "The shared inbox no longer made responsibility clear. A lightweight queue preserves the speed of email while making ownership, handoffs, and response history visible.",
     decisionMakers: [byId("jordan"), byId("alex")],
+    tags: ["support", "workflow"],
     category: "Customer support",
     status: "active",
     date: "2026-08-19",

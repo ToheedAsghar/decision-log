@@ -38,11 +38,11 @@
   --final-paper: oklch(0.975 0.004 95);
   --final-white: oklch(1 0 0);
   --final-ink: oklch(0.2 0.01 100);
-  --final-muted: oklch(0.49 0.01 100);
+  --final-muted: oklch(0.46 0.01 100);
   --final-line: oklch(0.84 0.008 95);
   --final-soft: oklch(0.945 0.006 95);
   --final-green: oklch(0.37 0.05 152);
-  --final-ochre: oklch(0.55 0.075 77);
+  --final-ochre: oklch(0.51 0.075 77);
   --background: var(--final-paper);
   --foreground: var(--final-ink);
   --card: var(--final-white);
@@ -980,11 +980,11 @@
   --final-paper: oklch(0.975 0.004 95);
   --final-white: oklch(1 0 0);
   --final-ink: oklch(0.2 0.01 100);
-  --final-muted: oklch(0.49 0.01 100);
+  --final-muted: oklch(0.46 0.01 100);
   --final-line: oklch(0.84 0.008 95);
   --final-soft: oklch(0.945 0.006 95);
   --final-green: oklch(0.37 0.05 152);
-  --final-ochre: oklch(0.55 0.075 77);
+  --final-ochre: oklch(0.51 0.075 77);
   --stone: var(--final-paper);
   --background: var(--final-paper);
   --foreground: var(--final-ink);
@@ -1219,6 +1219,20 @@ textarea {
   margin: 0;
   display: grid;
   gap: 9px;
+}
+.record-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.record-tags li {
+  border: 1px solid var(--soft-border);
+  padding: 4px 7px;
+  font-size: 11px;
+  line-height: 1;
 }
 .people-list li {
   display: flex;
@@ -1744,7 +1758,7 @@ textarea {
 .decision-row.is-selected {
   box-shadow: inset 3px 0 0 var(--foreground);
 }
-.row-copy h3 {
+.row-copy-title {
   margin: 0 0 8px;
   font-family: var(--font-serif);
   font-size: 21px;
@@ -1845,6 +1859,15 @@ textarea {
 .decision-form label > span {
   color: var(--muted-foreground);
   font-weight: 400;
+}
+.decision-form .form-help {
+  margin: -3px 0 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.decision-form .tags-help,
+.decision-form .description-help {
+  margin-top: -16px;
 }
 .decision-form input,
 .decision-form textarea {
@@ -2102,7 +2125,7 @@ textarea {
     grid-template-columns: 90px minmax(0, 1fr) 16px;
     gap: 12px;
   }
-  .row-copy h3 {
+  .row-copy-title {
     font-size: 20px;
   }
   .filters {

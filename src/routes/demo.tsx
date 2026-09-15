@@ -12,7 +12,7 @@ export const Route = createFileRoute("/demo")({
       { property: "og:title", content: "Decision Log Demo" },
       {
         property: "og:description",
-        content: "Search, filter, create, and review durable project decisions.",
+        content: "Filter, create, and review durable project decisions.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

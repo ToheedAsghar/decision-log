@@ -1,14 +1,22 @@
 import { useRef, useState } from "react";
 import { Button } from "@/atoms/button";
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
-import type { Decision, DecisionStatus } from "@/common/types";
+import type { Decision } from "@/common/types";
+import { people } from "@/constants/decisions";
 
-export type FormValues = { title: string; rationale: string; date: string; status: DecisionStatus };
+export type FormValues = {
+  title: string;
+  description: string;
+  rationale: string;
+  tags: string;
+  date: string;
+  decisionMakerIds: string[];
+};
 
 function initialForm(): FormValues {
   const now = new Date();
   const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-  return { title: "", rationale: "", date, status: "active" };
+  return { title: "", description: "", rationale: "", tags: "", date, decisionMakerIds: [] };
 }
 
 export function DecisionForm({
@@ -28,7 +36,11 @@ export function DecisionForm({
     event.preventDefault();
     const next: typeof errors = {};
     if (!values.title.trim()) next.title = "Enter a decision title.";
+    if (!values.description.trim()) next.description = "Describe the problem or outcome.";
     if (!values.rationale.trim()) next.rationale = "Explain why this decision was made.";
+    if (!values.tags.split(",").some((tag) => tag.trim())) next.tags = "Add at least one tag.";
+    if (!values.decisionMakerIds.length)
+      next.decisionMakerIds = "Select at least one decision maker.";
     if (
       !/^\d{4}-\d{2}-\d{2}$/.test(values.date) ||
       !Number.isFinite(Date.parse(values.date)) ||
@@ -74,6 +86,27 @@ export function DecisionForm({
           </p>
         ) : null}
         <label>
+          Description
+          <textarea
+            value={values.description}
+            onChange={(event) => setValues({ ...values, description: event.target.value })}
+            required
+            rows={3}
+            aria-invalid={Boolean(errors.description)}
+            aria-describedby={
+              errors.description ? "description-help description-error" : "description-help"
+            }
+          />
+        </label>
+        <p id="description-help" className="form-help description-help">
+          What problem does this address, or what will change?
+        </p>
+        {errors.description ? (
+          <p id="description-error" className="form-error" role="alert">
+            {errors.description}
+          </p>
+        ) : null}
+        <label>
           Why we decided this
           <textarea
             value={values.rationale}
@@ -87,6 +120,24 @@ export function DecisionForm({
         {errors.rationale ? (
           <p id="rationale-error" className="form-error" role="alert">
             {errors.rationale}
+          </p>
+        ) : null}
+        <label>
+          Tags
+          <input
+            value={values.tags}
+            onChange={(event) => setValues({ ...values, tags: event.target.value })}
+            required
+            aria-invalid={Boolean(errors.tags)}
+            aria-describedby={errors.tags ? "tags-help tags-error" : "tags-help"}
+          />
+        </label>
+        <p id="tags-help" className="form-help tags-help">
+          Separate tags with commas.
+        </p>
+        {errors.tags ? (
+          <p id="tags-error" className="form-error" role="alert">
+            {errors.tags}
           </p>
         ) : null}
         <label>
@@ -107,23 +158,38 @@ export function DecisionForm({
             {errors.date}
           </p>
         ) : null}
-        <label>
-          Status
-          <select
-            className="form-select"
-            value={replacing ? "active" : values.status}
-            disabled={Boolean(replacing)}
-            onChange={(event) =>
-              setValues({
-                ...values,
-                status: event.target.value === "superseded" ? "superseded" : "active",
-              })
-            }
-          >
-            <option value="active">Active</option>
-            <option value="superseded">Superseded</option>
-          </select>
-        </label>
+        <fieldset aria-describedby={errors.decisionMakerIds ? "makers-error" : undefined}>
+          <legend>Decision makers</legend>
+          <div className="maker-options">
+            {people.map((person) => {
+              const selected = values.decisionMakerIds.includes(person.id);
+              return (
+                <label key={person.id}>
+                  <input
+                    type="checkbox"
+                    checked={selected}
+                    aria-invalid={Boolean(errors.decisionMakerIds)}
+                    onChange={() =>
+                      setValues({
+                        ...values,
+                        decisionMakerIds: selected
+                          ? values.decisionMakerIds.filter((id) => id !== person.id)
+                          : [...values.decisionMakerIds, person.id],
+                      })
+                    }
+                  />
+                  <span aria-hidden="true">{person.initials}</span>
+                  {person.name}
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+        {errors.decisionMakerIds ? (
+          <p id="makers-error" className="form-error" role="alert">
+            {errors.decisionMakerIds}
+          </p>
+        ) : null}
         <div className="form-actions">
           <Button type="submit" className="button-primary">
             {replacing ? "Save replacement →" : "Save decision →"}

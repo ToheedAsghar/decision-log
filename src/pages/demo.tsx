@@ -7,7 +7,7 @@ import { DecisionRecord, DecisionRow } from "@/molecules/decision";
 import { DecisionForm, type FormValues } from "@/molecules/decision-form";
 import { RecordActions } from "@/molecules/record-actions";
 import { BrandMark } from "@/atoms/brand-logo";
-import { seedDecisions } from "@/constants/decisions";
+import { people, seedDecisions } from "@/constants/decisions";
 import type { Decision } from "@/common/types";
 
 export function DemoApp() {
@@ -56,11 +56,19 @@ export function DemoApp() {
       id: `decision-${number}`,
       number,
       title: values.title.trim(),
-      description: "",
+      description: values.description.trim(),
       rationale: values.rationale.trim(),
       date: values.date,
-      status: form?.replacing ? "active" : values.status,
-      decisionMakers: [],
+      status: "active",
+      decisionMakers: people.filter((person) => values.decisionMakerIds.includes(person.id)),
+      tags: Array.from(
+        new Set(
+          values.tags
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter(Boolean),
+        ),
+      ),
       category: "Project",
     };
     setDecisions((current) => [
