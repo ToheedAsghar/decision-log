@@ -207,7 +207,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-block: 82px 96px;
+  padding-block: 82px 40px;
   text-align: center;
 }
 .final-hero h1 {
@@ -449,7 +449,7 @@
   outline-offset: 2px;
 }
 .final-intro {
-  padding-block: 54px 84px;
+  padding-block: 32px 84px;
   border-top: 1px solid var(--final-line);
 }
 .final-intro p {
