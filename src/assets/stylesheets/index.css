@@ -2317,20 +2317,11 @@ textarea {
   font-weight: 600;
   text-decoration: none;
 }
-.demo-footer-brand-link span {
-  display: inline-grid;
-  place-items: center;
-  width: 14px;
-  height: 14px;
-  border: 1px solid var(--foreground);
-  border-radius: 50%;
+.demo-footer-brand-link:hover .brand-mark-svg {
+  transform: translateY(-0.5px) scale(1.05);
 }
-.demo-footer-brand-link span i {
-  display: block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--foreground);
+.demo-footer-brand-link:hover .brand-name-secondary {
+  color: var(--foreground);
 }
 .demo-footer-sep {
   color: var(--border);
